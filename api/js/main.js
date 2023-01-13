@@ -1,4 +1,4 @@
-const URL = "https://www.thecolorapi.com/";
+const URL = "https://aztro.sameerkumar.website";
 
 async function getData(URL) {
   try {
@@ -10,3 +10,9 @@ async function getData(URL) {
   }
 }
 getData(URL);
+
+function callback(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    console.log(body);
+  }
+}
