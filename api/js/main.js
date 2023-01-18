@@ -1,29 +1,22 @@
-// const URL = "https://aztro.sameerkumar.website";
+const url =
+  "https://edamam-food-and-grocery-database.p.rapidapi.com/parser?ingr=";
 
-// async function getData(URL) {
-//   try {
-//     const response = await fetch(URL);
-//     const data = await response.json();
-//     console.log(data);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-// getData(URL);
-
-// function callback(error, response, body) {
-//   if (!error && response.statusCode == 200) {
-//     console.log(body);
-//   }
-// }
-
-var options = {
-  url: "https://aztro.sameerkumar.website/?sign=aries&day=today",
-  method: "POST",
+const options = {
+  method: "GET",
+  headers: {
+    "X-RapidAPI-Key": "cd0ca1e34bmshf6261691f117b89p11b840jsndf80fbb9b25a",
+    "X-RapidAPI-Host": "edamam-food-and-grocery-database.p.rapidapi.com",
+  },
 };
 
-function callback(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    console.log(body);
-  }
-}
+const DOMSelectors = {
+  choice: document.getElementById("choice"),
+};
+
+//let food = `${DOMSelectors.choice.value}`;
+let food = "pancake";
+
+fetch(url + food, options)
+  .then((res) => res.json())
+  .then((json) => console.log(json))
+  .catch((err) => console.error("error:" + err));
