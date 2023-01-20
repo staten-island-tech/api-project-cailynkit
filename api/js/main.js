@@ -15,33 +15,41 @@ const DOMSelectors = {
   clear: document.getElementById("clear"),
   div: document.getElementById("div"),
 };
-
-DOMSelectors.enter.addEventListener("click", function () {
+function getFood() {
   let food = DOMSelectors.choice.value;
+  DOMSelectors.choice.value = "";
   fetch(url + food, options)
     .then((res) => res.json())
     .then((json) => {
       console.log(json);
+      if (json.hints.length === 0) {
+        DOMSelectors.div.insertAdjacentHTML(
+          "beforeend",
+          `<p class="innerHTML">Sorry, this food does not exist. Please try again.</p>`
+        );
+      }
       json.hints.forEach((number) =>
         DOMSelectors.div.insertAdjacentHTML(
           "beforeend",
-          `<p class="innerHTML">${number.food.label}</p>`
+          `<p class="innerHTML">${number.food.label}</p>
+          <img src="${number.food.image}" alt="" class="innerimg">`
         )
       );
     })
     .catch((err) => console.error("error:" + err));
+  DOMSelectors.div.innerHTML = "";
+}
+DOMSelectors.enter.addEventListener("click", getFood);
+
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    getFood();
+  }
 });
 
 DOMSelectors.clear.addEventListener("click", function () {
   let innerHTML = document.querySelectorAll(".innerHTML");
-  innerHTML.remove();
+  let innerimg = document.querySelectorAll(".innerimg");
+  innerHTML.forEach((number) => number.remove());
+  innerimg.forEach((number) => number.remove());
 });
-
-/* DOMSelectors.clear.addEventListener("click", function () {
-  DOMSelectors.song.value = "";
-  DOMSelectors.artist.value = "";
-  let innerHTML = document.getElementById("innerHTML");
-  innerHTML.remove();
-  let innerHTMLButton = document.getElementById("innerHTMLButton");
-  innerHTMLButton.remove();
-}); */
