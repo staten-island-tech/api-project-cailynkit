@@ -15,7 +15,21 @@ const DOMSelectors = {
   clear: document.getElementById("clear"),
   div: document.getElementById("div"),
 };
+
 function getFood() {
+  let food = DOMSelectors.choice.value;
+  DOMSelectors.choice.value = "";
+  fetch(url + food, options)
+    .then((res) => res.json())
+    .then((json) => {
+      console.log(json);
+      const foodSet = new Set(json.hints);
+      console.log([...new Set(foodSet)]);
+    });
+  DOMSelectors.div.innerHTML = "";
+}
+
+/* function getFood() {
   let food = DOMSelectors.choice.value;
   DOMSelectors.choice.value = "";
   fetch(url + food, options)
@@ -38,7 +52,8 @@ function getFood() {
     })
     .catch((err) => console.error("error:" + err));
   DOMSelectors.div.innerHTML = "";
-}
+} */
+
 DOMSelectors.enter.addEventListener("click", getFood);
 
 window.addEventListener("keydown", (event) => {
