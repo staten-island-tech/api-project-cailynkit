@@ -33,8 +33,11 @@ function getFood() {
       json.hints.forEach((number) =>
         DOMSelectors.main.insertAdjacentHTML(
           "beforeend",
-          `<p class="innerHTML">${number.food.label}</p>
-          <img src="${number.food.image}" alt="" class="innerimg">`
+          `<div class="card">
+          <p class="innerHTML">${number.food.label}</p>
+          <img src="${number.food.image}" alt="" class="innerimg">
+          </div>
+          `
         )
       );
     })
